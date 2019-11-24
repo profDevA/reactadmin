@@ -43,7 +43,7 @@ const Users = React.lazy(() => import('./Demo/User/Users'));
 
 const routes = [
     { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
-
+    
     // { path: '/dashboard/index', exact: true, name: 'Default', component: IndexDefault },
     
     { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },

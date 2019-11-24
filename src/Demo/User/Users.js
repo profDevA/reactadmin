@@ -16,196 +16,124 @@ class Users extends React.Component {
                                 <Card.Title as="h5">Existing Users</Card.Title>
                             </Card.Header>
                             <Card.Body>
-                                <Form>
-                                    <Table responsive hover>
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Full Name</th>
-                                                <th>Package</th>
-                                                <th>Country</th>
-                                                <th>Region</th>
-                                                <th>Mobile</th>
-                                                <th>Email</th>
-                                                <th>Email Verified</th>
-                                                <th>Mobile Verified</th>
-                                                <th>Fully Verified</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th></th>
-                                                <td>
-                                                    <Form.Control type="text" placeholder="" className="mb-3" />
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control type="text" placeholder="" className="mb-3" />
-                                                </td>
-                                                <td>
-                                                    <Form.Control type="email" placeholder="" className="mb-3" />
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select" className="mb-3">
-                                                        <option></option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                </Form>
+                                <Table responsive hover>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Full Name</th>
+                                            <th>Package</th>
+                                            <th>Country</th>
+                                            <th>Region</th>
+                                            <th>Mobile</th>
+                                            <th>Email</th>
+                                            <th>Email Verified</th>
+                                            <th>Mobile Verified</th>
+                                            <th>Fully Verified</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
                             </Card.Body>
                         </Card>
                         <Card>

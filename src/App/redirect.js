@@ -8,7 +8,6 @@ import Loader from './layout/Loader'
 import Aux from "../hoc/_Aux";
 import ScrollToTop from './layout/ScrollToTop';
 import routes from "../route";
-import SignIn from "../Demo/Authentication/SignIn/SignIn1"
 const AdminLayout = Loadable({
     loader: () => import('./layout/AdminLayout'),
     loading: Loader
@@ -34,9 +33,9 @@ class App extends Component {
                 <ScrollToTop>
                     <Suspense fallback={<Loader/>}>
                         <Switch>
-                            {menu}
-                            {/* <Route path="/" component={AdminLayout} /> */}
-                            <SignIn />
+                            {/* {menu} */}
+                            <Route path="/" component={AdminLayout} />
+                            {/* <SignIn /> */}
                         </Switch>
                     </Suspense>
                 </ScrollToTop>

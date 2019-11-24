@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown} from 'react-bootstrap';
+import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
 
@@ -11,6 +11,131 @@ class Users extends React.Component {
             <Aux>
                 <Row>
                     <Col>
+                        <Card>
+                            <Card.Header>
+                                <Card.Title as="h5">Existing Users</Card.Title>
+                            </Card.Header>
+                            <Card.Body>
+                                <Table responsive hover>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Full Name</th>
+                                            <th>Package</th>
+                                            <th>Country</th>
+                                            <th>Region</th>
+                                            <th>Mobile</th>
+                                            <th>Email</th>
+                                            <th>Email Verified</th>
+                                            <th>Mobile Verified</th>
+                                            <th>Fully Verified</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Alexander Morozov</td>
+                                            <td>Business Pro</td>
+                                            <td>United Arab Emirates</td>
+                                            <td></td>
+                                            <td>+9875462132</td>
+                                            <td>alex.moroz@gmail.com</td>
+                                            <td>Pending</td>
+                                            <td>Verified</td>
+                                            <td>No</td>
+                                            <td>Active</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Card.Body>
+                        </Card>
                         <Card>
                             <Card.Header>
                                 <Card.Title as="h5">Basic Component</Card.Title>

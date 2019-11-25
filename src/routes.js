@@ -6,11 +6,7 @@ window.$ = $;
 global.jQuery = $;
 
 const DashboardDefault = React.lazy(() => import('./Demo/Dashboard/Default'));
-// const IndexDefault = React.lazy(() => import('./Demo/Dashboard/Index'));
 const UIBasicButton = React.lazy(() => import('./Demo/UIElements/Basic/Button'));
-
-
-
 
 const UIBasicBadges = React.lazy(() => import('./Demo/UIElements/Basic/Badges'));
 
@@ -37,6 +33,10 @@ const AddUser = React.lazy(() => import('./Demo/User/addUser'));
 
 // Existing Users
 const Users = React.lazy(() => import('./Demo/User/Users'));
+// Staff List
+const StaffList = React.lazy(() => import('./Demo/User/Staff'));
+// Add New Staff
+const AddStaff = React.lazy(() => import('./Demo/User/AddStaff'));
 
 
 
@@ -61,6 +61,10 @@ const routes = [
     //from here new code
     { path: '/user/adduser', exact: true, name: 'Documentation', component: AddUser },
     { path: '/user/users', exact: true, name: 'Documentation', component: Users },
+    { path: '/user/staff', exact: true, name: 'Documentation', component: StaffList },
+    { path: '/user/AddStaff', exact: true, name: 'Documentation', component: AddStaff},
+
+
 
 ];
 

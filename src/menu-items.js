@@ -43,6 +43,14 @@ export default {
                             type: 'item',
                             url: '/user/users',
                             icon: 'fa fa-users',
+                        },
+
+                        {
+                            id: 'staff',
+                            title: 'Staff',
+                            type: 'item',
+                            url: '/user/staff',
+                            icon: 'fa fa-users',
                         }
                     ]
                 },

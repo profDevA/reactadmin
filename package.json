@@ -5,6 +5,7 @@
   "homepage": "http://lite.codedthemes.com/datta-able/react/default/",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "firebase": "^7.5.0",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^2.0.2",
     "jquery": "^3.4.0",
@@ -22,6 +23,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^3.0.0",
     "react-window-size": "^1.2.2",
+    "react-with-firebase-auth": "^1.2.0",
     "redux": "^4.0.1"
   },
   "scripts": {

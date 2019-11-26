@@ -1,9 +1,31 @@
 import React from 'react';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
-
+import firebase from 'firebase'
 import Aux from "../../hoc/_Aux";
 
 class Users extends React.Component {
+    constructor(props){
+        super(props)
+        this.state ={
+            users:[]
+        }
+    }
+    componentDidMount(){
+        this.getUserDatas(Userdatas=>{
+            this.setState({users:Userdatas})
+        })
+    }
+    callback=Userdatas=>{
+        this.setState({users:Userdatas})
+    }
+
+     getUserDatas =(callback) =>{
+        let temp=[]
+        firebase.database().ref(`/users/`).on("child_added", snap=>{
+            temp.append(snap.val())
+            callback(temp)
+        })
+    }
 
     render() {
 
@@ -35,6 +57,19 @@ class Users extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {this.state.users.map((data,index)=>{
+                                                return(
+                                                    <div>
+                                                    <td>
+                                                       {data.anme}
+                                                    </td>
+                                                        <td>
+                                                        {data.email}
+                                                    </td>
+                                                    </div>
+                                                )
+                                              
+                                            })}
                                             <tr>
                                                 <th></th>
                                                 <td>

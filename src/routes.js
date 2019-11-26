@@ -37,6 +37,8 @@ const Users = React.lazy(() => import('./Demo/User/Users'));
 const StaffList = React.lazy(() => import('./Demo/User/Staff'));
 // Add New Staff
 const AddStaff = React.lazy(() => import('./Demo/User/AddStaff'));
+// Add New Staff
+const UpdateStaff = React.lazy(() => import('./Demo/User/UpdateStaff'));
 
 
 
@@ -63,8 +65,7 @@ const routes = [
     { path: '/user/users', exact: true, name: 'Documentation', component: Users },
     { path: '/user/staff', exact: true, name: 'Documentation', component: StaffList },
     { path: '/user/AddStaff', exact: true, name: 'Documentation', component: AddStaff},
-
-
+    { path: '/user/UpdateStaff', exact: true, name: 'Documentation', component: UpdateStaff},
 
 ];
 

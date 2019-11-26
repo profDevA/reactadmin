@@ -103,10 +103,9 @@ class StaffList extends React.Component {
                                                 <td>**********</td>
                                                 <td>Active</td>
                                                 <td>
-                                                    <a className = "btn btn-success btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-edit" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
+                                                    <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to="/user/updatestaff"><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
+                                                    
+                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Remove" data-toggle="tooltip">
                                                         <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
                                                     </a>
                                                 </td>

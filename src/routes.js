@@ -27,18 +27,16 @@ const GoogleMap = React.lazy(() => import('./Demo/Maps/GoogleMap/index'));
 const OtherSamplePage = React.lazy(() => import('./Demo/Other/SamplePage'));
 const OtherDocs = React.lazy(() => import('./Demo/Other/Docs'));
 
-
-// Add user root
-const AddUser = React.lazy(() => import('./Demo/User/addUser'));
-
 // Existing Users
 const Users = React.lazy(() => import('./Demo/User/Users'));
 // Staff List
 const StaffList = React.lazy(() => import('./Demo/User/Staff'));
 // Add New Staff
 const AddStaff = React.lazy(() => import('./Demo/User/AddStaff'));
-// Add New Staff
+// Update  Staff
 const UpdateStaff = React.lazy(() => import('./Demo/User/UpdateStaff'));
+// Update User
+const UpdateUser = React.lazy(() => import('./Demo/User/UpdateUser'));
 
 
 
@@ -61,11 +59,12 @@ const routes = [
     { path: '/sample-page', exact: true, name: 'Sample Page', component: OtherSamplePage },
     { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs },
     //from here new code
-    { path: '/user/adduser', exact: true, name: 'Documentation', component: AddUser },
     { path: '/user/users', exact: true, name: 'Documentation', component: Users },
     { path: '/user/staff', exact: true, name: 'Documentation', component: StaffList },
     { path: '/user/AddStaff', exact: true, name: 'Documentation', component: AddStaff},
     { path: '/user/UpdateStaff', exact: true, name: 'Documentation', component: UpdateStaff},
+    //update user path
+    { path: '/user/UpdateUser', exact: true, name: 'Documentation', component: UpdateUser},
 
 ];
 

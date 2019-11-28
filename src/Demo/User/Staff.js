@@ -1,6 +1,10 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
+import firebase from 'firebase'
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css' 
+
 
 import Aux from "../../hoc/_Aux";
 
@@ -8,8 +12,53 @@ import Aux from "../../hoc/_Aux";
 
 class StaffList extends React.Component {
 
-    render() {
+    constructor (props) {
+        super(props)
 
+        this.state = {
+            staves:[]
+        }
+    }
+
+    async componentDidMount () {
+        await this.getStaves( async staff=>{await  this.setState({staves:staff}) });
+       
+    }
+
+    getStaves = (callback) => {                                     
+        let temp = [];
+        firebase.database().ref(`/staff/`).on('child_added',snap=> {
+            temp.push(snap.val())
+            callback(temp)
+        })
+    }
+
+    removeStaff = (id) => {
+        
+        confirmAlert({
+          message: 'Are you sure to delete this staff?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {
+                                firebase.database().ref(`/staff/${id}/`).remove()
+                                .catch(error => {console.log(error)})
+                                .then(data=> {
+                                    alert("Remove Success")
+                                    window.location.reload(true)
+                                })
+                            }
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        })
+        
+    }
+
+    render() {
         return (
             
             <Aux>
@@ -92,127 +141,45 @@ class StaffList extends React.Component {
                                               
                                                 <td></td>
                                             </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Full Access</td>
-                                                <td>Alexander Morozov</td>
-                                                <td>United States</td>
-                                                <td>New York</td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>**********</td>
-                                                <td>Active</td>
-                                                <td>
-                                                    <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to="/user/updatestaff"><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
-                                                    
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Remove" data-toggle="tooltip">
-                                                        <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Full Access</td>
-                                                <td>Alexander Morozov</td>
-                                                <td>United States</td>
-                                                <td>New York</td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>**********</td>
-                                                <td>Active</td>
-                                                <td>
-                                                    <a className = "btn btn-success btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-edit" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Full Access</td>
-                                                <td>Alexander Morozov</td>
-                                                <td>United States</td>
-                                                <td>New York</td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>**********</td>
-                                                <td>Active</td>
-                                                <td>
-                                                    <a className = "btn btn-success btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-edit" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Full Access</td>
-                                                <td>Alexander Morozov</td>
-                                                <td>United States</td>
-                                                <td>New York</td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>**********</td>
-                                                <td>Active</td>
-                                                <td>
-                                                    <a className = "btn btn-success btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-edit" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Full Access</td>
-                                                <td>Alexander Morozov</td>
-                                                <td>United States</td>
-                                                <td>New York</td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>**********</td>
-                                                <td>Active</td>
-                                                <td>
-                                                    <a className = "btn btn-success btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-edit" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Full Access</td>
-                                                <td>Alexander Morozov</td>
-                                                <td>United States</td>
-                                                <td>Vladivostok city</td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>**********</td>
-                                                <td>Active</td>
-                                                <td>
-                                                    
-                                                    <a className = "btn btn-success btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-edit" style = {{fontSize: 16, alignSelf:"flex-center" }}></i>
-                                                    </a>
-                                                    <a className = "btn btn-danger btn-xs" href="/staff/update" title="Update" data-toggle="tooltip">
-                                                        <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            {
+                                                this.state.staves.length>0 && 
+                                                this.state.staves.map((data, index) => {
+                                                    return (
+                                                        <tr>
+                                                            <th>{index + 1}</th>
+                                                            <td> {data.userGroup} </td>
+                                                            <td> {data.fullName} </td>
+                                                            <td> {data.country} </td>
+                                                            <td> {data.region} </td>
+                                                            <td> {data.mobile} </td>
+                                                            <td> {data.email} </td>
+                                                            <td>  {data.password} </td>
+                                                            <td> {data.status} </td>
+                                                            <td>
+                                                                <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/user/updatestaff", aboutProps:{
+                                                                    id:data.id,
+                                                                    usergroup:data.userGroup,
+                                                                    fullName:data.fullName,
+                                                                    country:data.country,
+                                                                    region:data.region,
+                                                                    mobile:data.mobile,
+                                                                    email:data.email,
+                                                                    password:data.password,
+                                                                    status:data.status,
+                                                                    
+                                                                }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
+                                                                
+                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" onClick = {() => this.removeStaff(data.id)}>
+                                                                    <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    )   
+                                                })
+                                            }
+                                           
                                         </tbody>
                                     </Table>
-                                    <Row>
-                                        <Col>
-                                        
-                                        </Col>
-                                    </Row>
                                 </Form>
                             </Card.Body>
                         </Card>

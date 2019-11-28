@@ -2,6 +2,9 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
 import firebase from 'firebase';
+import { withRouter } from 'react-router'
+
+
 import Aux from "../../hoc/_Aux";
 
 
@@ -9,19 +12,15 @@ import Aux from "../../hoc/_Aux";
 class AddStaff extends React.Component {
     constructor(props){
         super(props)
-        this.state ={
-            users:[],
+        this.state = {
             userGroup:'',
-            userGroups:[],
             fullName:'',
             country:'',
             region:'',
             mobile:'',
             email: '',
             password: '',
-            countries:[], 
             status:'',
-
         }
     }
 
@@ -109,7 +108,38 @@ class AddStaff extends React.Component {
             return
         }
 
+        if(!this.state.country) {
+            alert('Slect User Country')
+            return
+        }
+
+        if ( !this.state.region) {
+            alert("Slect region")
+            return
+        }
+
+        if(!this.state.mobile) {
+            alert('Enter your number')
+            return
+        }
+
+        if ( !this.state.email) {
+            alert("Enter your email.")
+            return
+        }
+
+        if(!this.state.password) {
+            alert('Enter your password.')
+            return
+        }
+
+        if ( !this.state.status) {
+            alert("Selct status")
+            return
+        }
+
         let id = Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+
         firebase.database().ref(`/staff/${id}/`).set({
             id:id,
             fullName:this.state.fullName,
@@ -123,10 +153,14 @@ class AddStaff extends React.Component {
         })
         .catch(error=>{alert(error)})
         .then(data=>{
-            alert(data)
+            alert("Added Successfully")
         })
+
+        this.props.history.go(-1)
+        
         console.log('success')
     }
+
     render() {
 
         return (
@@ -146,15 +180,6 @@ class AddStaff extends React.Component {
                                                 <Form.Label>User Group</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.userGroup = ref}} onChange={this.showUserGroup} value={this.state.userGroup}>
                                                     <option value={null}>Select Group</option>
-                                                    {
-                                                        this.state.userGroups.length>0 &&
-                                                        this.state.userGroups.map((data, index)=>{
-                                                            return(
-                                                                <option>{data.userGroup}</option>
-                                                            )
-                                                        
-                                                        })
-                                                    }
                                                     <option value="admin">Admin</option>
                                                     <option value="customer-support">Customer Support</option>
                                                     <option value="full-access">Full Access</option>
@@ -171,15 +196,6 @@ class AddStaff extends React.Component {
                                                 <Form.Label>Country</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.country = ref}} onChange={this.showCountry} value={this.state.country}>
                                                     <option value={null}>Select Country</option>
-                                                    {
-                                                        this.state.countries.length>0 &&
-                                                        this.state.countries.map((data, index)=>{
-                                                            return(
-                                                                <option>{data.country}</option>
-                                                            )
-                                                        
-                                                        })
-                                                    }
                                                     <option value={'United States'}>United States</option>
                                                     <option value={'Canada'}>Canada</option>
                                                     <option value={'China'}>China</option>
@@ -240,5 +256,7 @@ class AddStaff extends React.Component {
         );
     }
 }
+
+const AddStaffWithRouter = withRouter(AddStaff)
 
 export default AddStaff;

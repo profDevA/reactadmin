@@ -1,37 +1,22 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import ReactDOM from "react-dom";
-import app from 'firebase/app';
+
 import firebase from 'firebase';
 import './../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import Redirect from "../../../App/redirect";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCuh0RGbUDqpxkkyq8ohzI0wIGKu1FeHp4",
-    authDomain: "cx-app-b3b2a.firebaseapp.com",
-    databaseURL: "https://cx-app-b3b2a.firebaseio.com",
-    projectId: "cx-app-b3b2a",
-    storageBucket: "cx-app-b3b2a.appspot.com",
-    messagingSenderId: "136046956873",
-    appId: "1:136046956873:web:9ede56d9c1a0373e390a98",
-    measurementId: "G-YW5M5KSEVD"
-};
 
 
-// class Firebase {
-//   constructor() {
-    
-//   }
-// }
-// export default Firebase;
+
 
 
 class SignUp1 extends React.Component {
     constructor(props){
         super(props)
-        app.initializeApp(firebaseConfig);
+        
         this.state={
             isVisibleDashboard:false,
             email:'',
@@ -40,9 +25,9 @@ class SignUp1 extends React.Component {
     }
 
     componentDidMount(){
-        // localStorage.setItem("data","8888888")
-        console.log(localStorage.getItem("index"))
-        if(localStorage.getItem("index")){
+        
+        
+        if(localStorage.getItem("UID")){
             this.setState({isVisibleDashboard:true})
         }
     }
@@ -55,10 +40,12 @@ class SignUp1 extends React.Component {
         } else {
             firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(data=>{
-                console.log(data)
+                console.log(data.user.uid)
+                localStorage.setItem("UID",data.user.uid)
+                this.setState({isVisibleDashboard:true})
             })
             .catch(error=>{console.log(error)})
-        }
+        }     
         
         
     }

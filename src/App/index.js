@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
-
+import app from 'firebase/app';
 import '../../node_modules/font-awesome/scss/font-awesome.scss';
 
 import Loader from './layout/Loader'
@@ -14,7 +14,22 @@ const AdminLayout = Loadable({
     loading: Loader
 });
 
+const firebaseConfig = {
+    apiKey: "AIzaSyCuh0RGbUDqpxkkyq8ohzI0wIGKu1FeHp4",
+    authDomain: "cx-app-b3b2a.firebaseapp.com",
+    databaseURL: "https://cx-app-b3b2a.firebaseio.com",
+    projectId: "cx-app-b3b2a",
+    storageBucket: "cx-app-b3b2a.appspot.com",
+    messagingSenderId: "136046956873",
+    appId: "1:136046956873:web:9ede56d9c1a0373e390a98",
+    measurementId: "G-YW5M5KSEVD"
+};
+
 class App extends Component {
+    constructor(props){
+        super(props)
+        app.initializeApp(firebaseConfig);
+    }
     render() {
         const menu = routes.map((route, index) => {
           return (route.component) ? (

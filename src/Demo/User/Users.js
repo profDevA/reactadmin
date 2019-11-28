@@ -1,31 +1,67 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
 import firebase from 'firebase'
 import Aux from "../../hoc/_Aux";
+
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css' 
 
 class Users extends React.Component {
     constructor(props){
         super(props)
         this.state ={
-            users:[]
+            users:[],
+            Ids:[]            
         }
     }
     componentDidMount(){
-        this.getUserDatas(Userdatas=>{
-            this.setState({users:Userdatas})
-        })
-    }
-    callback=Userdatas=>{
-        this.setState({users:Userdatas})
+         this.getUsers(  user => {  this.setState({users:user}) });
     }
 
-     getUserDatas =(callback) =>{
-        let temp=[]
-        firebase.database().ref(`/users/`).on("child_added", snap=>{
-            temp.append(snap.val())
-            callback(temp)
+    getUsers = (callback) => {  
+        let temp = []
+        firebase.firestore().collection("users").where("id", ">", "")
+        .get()
+        .then(function(querySnapshot) {
+            console.log(querySnapshot)
+            querySnapshot.forEach(function(doc) {
+                temp.push(doc.data())
+                callback (temp)
+                console.log(temp);
+            });
         })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+
     }
+
+    removeUser = (id) => {
+        
+        confirmAlert({
+          message: 'Are you sure to delete this user?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {
+                                firebase.firestore().ref(`/users/${id}/`).remove()
+                                .catch(error => {console.log(error)})
+                                .then(data=> {
+                                    alert("Remove Success")
+                                    window.location.reload(true)
+                                })
+                            }
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        })
+        
+    }
+
 
     render() {
 
@@ -44,32 +80,15 @@ class Users extends React.Component {
                                             <tr>
                                                 <th>#</th>
                                                 <th>Full Name</th>
+                                                <th>Email</th>
                                                 <th>Package</th>
                                                 <th>Country</th>
-                                                <th>Region</th>
                                                 <th>Mobile</th>
-                                                <th>Email</th>
-                                                <th>Email Verified</th>
-                                                <th>Mobile Verified</th>
-                                                <th>Fully Verified</th>
-                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.users.map((data,index)=>{
-                                                return(
-                                                    <div>
-                                                    <td>
-                                                       {data.anme}
-                                                    </td>
-                                                        <td>
-                                                        {data.email}
-                                                    </td>
-                                                    </div>
-                                                )
-                                              
-                                            })}
+                                            
                                             <tr>
                                                 <th></th>
                                                 <td>
@@ -105,131 +124,43 @@ class Users extends React.Component {
                                                 <td>
                                                     <Form.Control type="text" placeholder="" />
                                                 </td>
-                                                <td>
-                                                    <Form.Control type="email" placeholder="" />
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
+                                               
+                                                
                                                 <td></td>
                                             </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Alexander Morozov</td>
-                                                <td>Business Pro</td>
-                                                <td>United Arab Emirates</td>
-                                                <td></td>
-                                                <td>+9875462132</td>
-                                                <td>alex.moroz@gmail.com</td>
-                                                <td>Pending</td>
-                                                <td>Verified</td>
-                                                <td>No</td>
-                                                <td>Active</td>
-                                                <td></td>
-                                            </tr>
+                                            
+                                            {
+                                                this.state.users.length > 0 &&
+                                                this.state.users.map((data, index) => {
+
+                                                    return (
+                                                        <tr>
+                                                            <th>{index + 1}</th>
+                                                            <td> {data.username} </td>
+                                                            <td> {data.email} </td>
+                                                            <td> {data.isbasicuser} </td>
+                                                            <td> {data.countryname} </td>
+                                                            <td> {data.phonenumber} </td>
+                                                            <td>
+                                                                <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/user/UpdateUser", aboutProps:{
+                                                                    id:data.id,
+                                                                    fullName:data.username,
+                                                                    country:data.country,
+                                                                    package:data.isbasicuser,
+                                                                    mobile:data.phonenumber,
+                                                                    email:data.email,
+                                                                    
+                                                                }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
+                                                                
+                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" onClick = {() => this.removeUser(data.id)}>
+                                                                    <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                            
                                         </tbody>
                                     </Table>
                                 </Form>

@@ -88,7 +88,6 @@ class Users extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
                                             <tr>
                                                 <th></th>
                                                 <td>
@@ -145,7 +144,7 @@ class Users extends React.Component {
                                                                 <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/user/UpdateUser", aboutProps:{
                                                                     id:data.id,
                                                                     fullName:data.username,
-                                                                    country:data.country,
+                                                                    country:data.countryname,
                                                                     package:data.isbasicuser,
                                                                     mobile:data.phonenumber,
                                                                     email:data.email,
@@ -160,7 +159,6 @@ class Users extends React.Component {
                                                     )
                                                 })
                                             }
-                                            
                                         </tbody>
                                     </Table>
                                 </Form>

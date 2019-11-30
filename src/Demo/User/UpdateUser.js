@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
 import firebase from 'firebase'
 import { withRouter } from 'react-router'
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 
 import Aux from "../../hoc/_Aux";
@@ -18,6 +19,7 @@ class UpdateUser extends React.Component {
             email: '',
             package:'',
             country:'',
+            region: '',
             mobile:'',
         }
     }
@@ -29,10 +31,7 @@ class UpdateUser extends React.Component {
         this.setState ({ package: this.props.location.aboutProps.package })
         this.setState ({ country: this.props.location.aboutProps.country })
         this.setState ({ mobile: this.props.location.aboutProps.mobile })
-
-        console.log( this.state.fullName)
-        console.log("country", this.state.country)
-        console.log("mobile", this.state.mobile)
+        console.log( this.props.location.aboutProps.mobile, "--------------------")
     }
 
    
@@ -54,11 +53,18 @@ class UpdateUser extends React.Component {
         console.log(this.state.package)
     }
 
-    //Show Country
-    showCountry = async () => {
-        await this.setState({country:this.country.value})
+    
+
+     selectCountry = async (val) => {
+        await this.setState({ country: val });
         await console.log(this.state.country)
     }
+
+    selectRegion = (val) => {
+        this.setState({ region: val });
+        console.log(this.state.region)
+    }
+    
 
     //showMobile
     showMobile = () => {
@@ -66,6 +72,7 @@ class UpdateUser extends React.Component {
         console.log(this.state.mobile)
     }
 
+    sa
     onSave=()=>{
 
         if ( !this.state.fullName) {
@@ -93,17 +100,21 @@ class UpdateUser extends React.Component {
             return
         }
 
-
-        let id = Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
-        firebase.database().ref(`/users/${id}/`).set({
+        let id = ""
+        id = this.state.id;
+        firebase.firestore().collection('users')
+        .doc(id)
+        .set({
             id:id,
             username:this.state.fullName,
             email:this.state.email,
-            isbasicuser: this.state.password,
+            isbasicuser: this.state.package,
             countryname:this.state.country,
-            mobile: this.state.mobile,
+            phonenumber: this.state.mobile,
         })
-        .catch(error=>{alert(error)})
+        .catch(function(error) {
+            console.log("Error setting documents: ", error);
+        })
         .then(data=>{
             alert("Added Successfully")
         })
@@ -111,10 +122,11 @@ class UpdateUser extends React.Component {
 
         console.log('success')
     }
-    render() {
 
+    /* render part*/ 
+    render() {
+        const { country, region } = this.state;
         return (
-            
             <Aux>
                 <Row>
                     <Col>
@@ -140,28 +152,21 @@ class UpdateUser extends React.Component {
                                                 <Form.Label>Package</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.package = ref}} onChange={this.showPackage} value={this.state.package}>
                                                     <option value={null}>Select Package</option>
-                                                    <option value={'basic'}>Basic</option>
-                                                    <option value={'premium'}>Premium</option>
-                                                    <option value={'businesspro'}>Business Pro</option>
-                                                    <option value={'Admin'}>Admin</option>
+                                                    <option>Basic</option>
+                                                    <option>Premium</option>
+                                                    <option>Business pro</option>
+                                                    <option>Admin</option>
                                                 </Form.Control>
                                             </Form.Group>
 
                                             <Form.Group controlId="editUserForm.Country">
                                                 <Form.Label>Country</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.country = ref}} onChange={this.showCountry} value={this.state.country}>
-                                                    <option value={null}>Select Country</option>
-                                                    <option value={'United States'}>United States</option>
-                                                    <option value={'Canada'}>Canada</option>
-                                                    <option value={'China'}>China</option>
-                                                    <option value={'Russia'}>Russia</option>
-                                                    <option value={'Japan'}>Japan</option>
-                                                </Form.Control>
+                                                <CountryDropdown className={'form-control'} ref={(ref) => {this.country = ref}} value={country} onChange={(val) => this.selectCountry(val)} />
                                             </Form.Group>
                                            
                                             <Form.Group controlId="editUserForm.Mobile">
                                                 <Form.Label>Mobile</Form.Label>
-                                                <Form.Control ref={(ref) => {this.mobile = ref}} type="number" placeholder="Enter your mobile number" value={this.state.mobile} 
+                                                <Form.Control ref={(ref) => {this.mobile = ref}} type="text" placeholder="Enter your mobile number" value={this.state.mobile} 
                                                     onChange={this.showMobile}/>
                                             </Form.Group>
 
@@ -170,7 +175,7 @@ class UpdateUser extends React.Component {
                                     <Row>
                                         <Col>
                                             <Button className="btn-success float-left" name="addNewStaff" onClick={this.onSave} >Save</Button>
-                                            <Button className="btn-default float-right" name="cancel" onClick="" ><NavLink style = {{color:"white"}} to="/user/staff">Cancel</NavLink></Button>
+                                            <Button className="btn-default float-right" name="cancel" onClick="" ><NavLink style = {{color:"white"}} to="/user/users">Cancel</NavLink></Button>
                                         </Col>
                                     </Row>
                                 </Form>

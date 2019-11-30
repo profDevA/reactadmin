@@ -158,7 +158,7 @@ class StaffList extends React.Component {
                                                             <td>
                                                                 <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/user/updatestaff", aboutProps:{
                                                                     id:data.id,
-                                                                    usergroup:data.userGroup,
+                                                                    userGroup:data.userGroup,
                                                                     fullName:data.fullName,
                                                                     country:data.country,
                                                                     region:data.region,

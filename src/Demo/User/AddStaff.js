@@ -180,11 +180,11 @@ class AddStaff extends React.Component {
                                                 <Form.Label>User Group</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.userGroup = ref}} onChange={this.showUserGroup} value={this.state.userGroup}>
                                                     <option value={null}>Select Group</option>
-                                                    <option value="admin">Admin</option>
-                                                    <option value="customer-support">Customer Support</option>
-                                                    <option value="full-access">Full Access</option>
-                                                    <option value="moderators">Moderators</option>
-                                                    <option value="sales-staff">Sales Staff</option>
+                                                    <option>Admin</option>
+                                                    <option>Customer Support</option>
+                                                    <option>Full Access</option>
+                                                    <option>Moderators</option>
+                                                    <option>Sales Staff</option>
                                                 </Form.Control>
                                             </Form.Group>
 
@@ -196,11 +196,11 @@ class AddStaff extends React.Component {
                                                 <Form.Label>Country</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.country = ref}} onChange={this.showCountry} value={this.state.country}>
                                                     <option value={null}>Select Country</option>
-                                                    <option value={'United States'}>United States</option>
-                                                    <option value={'Canada'}>Canada</option>
-                                                    <option value={'China'}>China</option>
-                                                    <option value={'Russia'}>Russia</option>
-                                                    <option value={'Japan'}>Japan</option>
+                                                    <option>United States</option>
+                                                    <option>Canada</option>
+                                                    <option>China</option>
+                                                    <option>Russia</option>
+                                                    <option>Japan</option>
                                                 </Form.Control>
                                             </Form.Group>
                                             <Form.Group controlId="addStaffForm.Region">

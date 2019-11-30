@@ -3,6 +3,8 @@ import {NavLink} from 'react-router-dom';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
 import firebase from 'firebase'
 import { withRouter } from 'react-router'
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+
 
 
 import Aux from "../../hoc/_Aux";
@@ -31,14 +33,17 @@ class UpdateStaff extends React.Component {
         this.setState ({ userGroup: this.props.location.aboutProps.userGroup })
         this.setState ({ fullName: this.props.location.aboutProps.fullName })
         this.setState ({ country: this.props.location.aboutProps.country })
-        this.setState ({ country: this.props.location.aboutProps.country })
         this.setState ({ region: this.props.location.aboutProps.region })
+        this.setState ({ email: this.props.location.aboutProps.email })
         this.setState ({ mobile: this.props.location.aboutProps.mobile })
         this.setState ({ password: this.props.location.aboutProps.password })
         this.setState ({ status: this.props.location.aboutProps.status })
 
         this.getCountry(countries=>{this.setState({countries:countries})})
         this.getUserGroup(userGroup=>{this.setState({userGroups:userGroup})})
+
+        console.log("adsfasdfasdfasdf")
+
     }
 
      //Get User Group
@@ -72,15 +77,15 @@ class UpdateStaff extends React.Component {
     }
 
     //Show Country
-    showCountry = async () => {
-        await this.setState({country:this.country.value})
+    selectCountry = async (val) => {
+        await this.setState({ country: val });
         await console.log(this.state.country)
     }
 
     //Show Region
-    showRegion = async () => {
-        await this.setState({region:this.region.value})
-        await console.log(this.state.region)
+    selectRegion = (val) => {
+        this.setState({ region: val });
+        console.log(this.state.region)
     }
 
     //showMobile
@@ -150,7 +155,9 @@ class UpdateStaff extends React.Component {
             return
         }
 
-        let id = Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+       
+        let id = this.state.id;
+
         firebase.database().ref(`/staff/${id}/`).set({
             id:id,
             fullName:this.state.fullName,
@@ -166,11 +173,14 @@ class UpdateStaff extends React.Component {
         .then(data=>{
             alert("Added Successfully")
         })
+        
         this.props.history.go(-1)
 
         console.log('success')
     }
     render() {
+
+        const { country, region } = this.state;
 
         return (
             
@@ -190,11 +200,11 @@ class UpdateStaff extends React.Component {
                                                 <Form.Control as="select" ref={(ref) => {this.userGroup = ref}} onChange={this.showUserGroup} value={this.state.userGroup}>
                                                     <option value={null}>Select Group</option>
                                                     
-                                                    <option value="admin">Admin</option>
-                                                    <option value="customer-support">Customer Support</option>
-                                                    <option value="full-access">Full Access</option>
-                                                    <option value="moderators">Moderators</option>
-                                                    <option value="sales-staff">Sales Staff</option>
+                                                    <option>Admin</option>
+                                                    <option>Customer Support</option>
+                                                    <option>Full Access</option>
+                                                    <option>Moderators</option>
+                                                    <option>Sales Staff</option>
                                                 </Form.Control>
                                             </Form.Group>
 
@@ -202,28 +212,15 @@ class UpdateStaff extends React.Component {
                                                 <Form.Label>Full Name</Form.Label>
                                                 <Form.Control ref={(ref) => {this.fullName = ref}} type="text" placeholder="Enter your Full Name" value = {this.state.fullName} onChange={this.showFullName}/>
                                             </Form.Group>
-                                            <Form.Group controlId="editStaffForm.Country">
+
+                                            <Form.Group controlId="editUserForm.Country">
                                                 <Form.Label>Country</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.country = ref}} onChange={this.showCountry} value={this.state.country}>
-                                                    <option value={null}>Select Country</option>
-                                                   
-                                                    <option value={'United States'}>United States</option>
-                                                    <option value={'Canada'}>Canada</option>
-                                                    <option value={'China'}>China</option>
-                                                    <option value={'Russia'}>Russia</option>
-                                                    <option value={'Japan'}>Japan</option>
-                                                </Form.Control>
+                                                <CountryDropdown className={'form-control'} ref={(ref) => {this.country = ref}} value={country} onChange={(val) => this.selectCountry(val)} />
                                             </Form.Group>
+
                                             <Form.Group controlId="editStaffForm.Region">
                                                 <Form.Label>Region</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.region = ref}} onChange={this.showRegion} value={this.state.region} >
-                                                    <option value={null}>Select Region</option>
-                                                    <option value={'New York'}>New York</option>
-                                                    <option value={'Califonia'}>Califonia</option>
-                                                    <option value={'Washington'}>Washington</option>
-                                                    <option value={'Ros Angeles'}>Ros Angeles</option>
-                                                    <option value={'Boston'}>Boston</option>
-                                                </Form.Control>
+                                                <RegionDropdown className={'form-control'} ref={(ref) => {this.region = ref}} country={country} value={region} onChange={(val) => this.selectRegion(val)} />
                                             </Form.Group>
 
                                             <Form.Group controlId="editStaffForm.Mobile">

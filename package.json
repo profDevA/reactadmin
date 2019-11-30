@@ -14,6 +14,7 @@
     "react": "^16.8.4",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-confirm-alert": "^2.4.1",
+    "react-country-region-selector": "^1.4.5",
     "react-dom": "^16.8.4",
     "react-full-screen": "^0.2.4",
     "react-loadable": "^5.5.0",

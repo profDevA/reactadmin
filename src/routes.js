@@ -38,6 +38,30 @@ const UpdateStaff = React.lazy(() => import('./Demo/User/UpdateStaff'));
 // Update User
 const UpdateUser = React.lazy(() => import('./Demo/User/UpdateUser'));
 
+//Products
+const Products = React.lazy(() => import('./Demo/Products/Products'));
+const AddProducts = React.lazy(() => import('./Demo/Products/AddProducts'));
+const UpdateProducts = React.lazy(() => import('./Demo/Products/UpdateProducts'));
+
+//Listings buy Listings
+const BuyListings = React.lazy(() => import('./Demo/Listings/Buy/BuyListings'));
+const AddBuyListings = React.lazy(() => import('./Demo/Listings/Buy/AddBuyListings'));
+const UpdateBuyListings = React.lazy(() => import('./Demo/Listings/Buy/UpdateBuyListings'));
+
+//Listings Sell Listings
+const SellListings = React.lazy(() => import('./Demo/Listings/Sell/SellListings'));
+const AddSellListings = React.lazy(() => import('./Demo/Listings/Sell/AddSellListings'));
+const UpdateSellListings = React.lazy(() => import('./Demo/Listings/Sell/UpdateSellListings'));
+
+
+const ServiceListings = React.lazy(() => import('./Demo/Listings/Service/ServiceListings'));
+const AddServiceListings = React.lazy(() => import('./Demo/Listings/Service/AddServiceListings'));
+const UpdateServiceListings = React.lazy(() => import('./Demo/Listings/Service/UpdateServiceListings'));
+
+const AddListings = React.lazy(() => import('./Demo/Listings/AddListings'));
+
+
+
 
 
 
@@ -65,6 +89,29 @@ const routes = [
     { path: '/user/UpdateStaff', exact: true, name: 'Documentation', component: UpdateStaff},
     //update user path
     { path: '/user/UpdateUser', exact: true, name: 'Documentation', component: UpdateUser},
+    
+    //products
+    { path: '/products/products', exact: true, name: 'Products', component: Products},
+    { path: '/products/addproducts', exact: true, name: 'AddProducts', component: AddProducts},
+    { path: '/products/updateproducts', exact: true, name: 'UpdateProducts', component: UpdateProducts},
+
+    //Listings Buy Listings
+    { path: '/listings/Buy/buylistings', exact: true, name: 'BuyListings', component: BuyListings},
+    { path: '/listings/Buy/addbuylistings', exact: true, name: 'AddBuyListings', component: AddBuyListings},
+    { path: '/listings/Buy/updatebuylistings', exact: true, name: 'UpdateBuyListings', component: UpdateBuyListings},
+
+    //Listings Sell Listings
+    { path: '/listings/Sell/selllistings', exact: true, name: 'BuyListings', component: SellListings},
+    { path: '/listings/Sell/addselllistings', exact: true, name: 'AddBuyListings', component: AddSellListings},
+    { path: '/listings/Sell/updateselllistings', exact: true, name: 'UpdateBuyListings', component: UpdateSellListings},
+
+    { path: '/listings/service/servicelistings', exact: true, name: 'BuyListings', component: ServiceListings},
+    { path: '/listings/service/addservicelistings', exact: true, name: 'AddBuyListings', component: AddServiceListings},
+    { path: '/listings/service/updateservicelistings', exact: true, name: 'UpdateBuyListings', component: UpdateServiceListings},
+
+    
+    { path: '/listings/addlistings', exact: true, name: 'AddListings', component: AddListings},
+
 
 ];
 

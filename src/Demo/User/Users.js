@@ -37,6 +37,8 @@ class Users extends React.Component {
 
     }
 
+    
+
     removeUser = (id) => {
         
         confirmAlert({

@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown, Table} from 'react-bootstrap';
 import firebase from 'firebase';
 import { withRouter } from 'react-router'
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 
 import Aux from "../../hoc/_Aux";
@@ -60,15 +61,15 @@ class AddStaff extends React.Component {
     }
 
     //Show Country
-    showCountry = async () => {
-        await this.setState({country:this.country.value})
+    selectCountry = async (val) => {
+        await this.setState({ country: val });
         await console.log(this.state.country)
     }
 
     //Show Region
-    showRegion = async () => {
-        await this.setState({region:this.region.value})
-        await console.log(this.state.region)
+    selectRegion = (val) => {
+        this.setState({ region: val });
+        console.log(this.state.region)
     }
 
     //showMobile
@@ -162,6 +163,7 @@ class AddStaff extends React.Component {
     }
 
     render() {
+        const {country, region} = this.state
 
         return (
             
@@ -192,27 +194,15 @@ class AddStaff extends React.Component {
                                                 <Form.Label>Full Name</Form.Label>
                                                 <Form.Control ref={(ref) => {this.fullName = ref}} type="text" placeholder="Enter your Full Name" value = {this.state.fullName} onChange={this.showFullName}/>
                                             </Form.Group>
+                                            
                                             <Form.Group controlId="addStaffForm.Country">
                                                 <Form.Label>Country</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.country = ref}} onChange={this.showCountry} value={this.state.country}>
-                                                    <option value={null}>Select Country</option>
-                                                    <option>United States</option>
-                                                    <option>Canada</option>
-                                                    <option>China</option>
-                                                    <option>Russia</option>
-                                                    <option>Japan</option>
-                                                </Form.Control>
+                                                <CountryDropdown className={'form-control'} ref={(ref) => {this.country = ref}} value={country} onChange={(val) => this.selectCountry(val)} />
                                             </Form.Group>
+
                                             <Form.Group controlId="addStaffForm.Region">
                                                 <Form.Label>Region</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.region = ref}} onChange={this.showRegion} value={this.state.region} >
-                                                    <option value={null}>Select Region</option>
-                                                    <option value={'New York'}>New York</option>
-                                                    <option value={'Califonia'}>Califonia</option>
-                                                    <option value={'Washington'}>Washington</option>
-                                                    <option value={'Ros Angeles'}>Ros Angeles</option>
-                                                    <option value={'Boston'}>Boston</option>
-                                                </Form.Control>
+                                                <RegionDropdown className={'form-control'} ref={(ref) => {this.region = ref}} country={country} value={region} onChange={(val) => this.selectRegion(val)} />
                                             </Form.Group>
 
                                             <Form.Group controlId="addStaffForm.Mobile">

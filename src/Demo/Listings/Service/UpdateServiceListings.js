@@ -6,52 +6,51 @@ import { withRouter } from 'react-router';
 
 import Aux from "../../../hoc/_Aux";
 
-class AddListings extends React.Component {
+class UpdateServiceListings extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            id:'',
-            make:'',
-            productType:'',
-            model:''
+            userId:'',
+            type:'',
+            timeStamp:'',
+            serviceTitle:'',
+            description:'',
         }
     }
 
     componentDidMount(){
-        console.log(this.props.location.aboutProps)
+        console.log(this.props.location.aboutProps, 'this is props data')
         if(this.props.location.aboutProps){
-            this.setState({id:this.props.location.aboutProps.id})
-            this.setState({make:this.props.location.aboutProps.make})
-            this.setState({productType:this.props.location.aboutProps.productType})
-            this.setState({model:this.props.location.aboutProps.model})
-        }        
+            this.setState({type:this.props.location.aboutProps.type})
+            this.setState({userId:this.props.location.aboutProps.userId})
+            this.setState({timeStamp:this.props.location.aboutProps.timeStamp})
+            this.setState({serviceTitle:this.props.location.aboutProps.servicetitle})
+            this.setState({description:this.props.location.aboutProps.description})
+        }   
+        
+        console.log(this.state.userId, 'userId')
     }
 
-    setMake = async () => {
-        await this.setState({make:this.make.value})
-        await console.log(this.state.make)
+    setServiceTitle = async () => {
+        await this.setState({serviceTitle:this.serviceTitle.value})
+        await console.log(this.state.serviceTitle)
     }
 
-    setModel = async () => {
-        await this.setState({model:this.model.value})
-        await console.log(this.state.model)
-    }
-
-    setProductType = () => {
-        this.setState({productType:this.productType.value})
-        console.log(this.state.productType)
+    setServiceDescription = async () => {
+        await this.setState({description:this.description.value})
+        await console.log(this.state.description)
     }
 
     onUpdate= async ()=>{
-        if ( this.state.make === '') {
-            alert("Selct Make")
-        } else if (this.state.model === ''){
-            alert("Select Model")
-        } else if (this.state.productType === ''){
-            alert("Enter Product Type")
-        } else {     
-            await firebase.database().ref(`/Make/${this.state.make}/${this.state.model}/${this.state.id}/`).set({
-                name:this.state.productType 
+        if ( this.state.serviceTitle === '') {
+            alert("Enter service title")
+        } else if (this.state.description === ''){
+            alert("Enter service description")
+        } else {    
+            console.log('this is end========', this.state.type, this.state.userId, this.state.timeStamp,this.state.serviceTitle, this.state.description) 
+            await firebase.database().ref(`/NewPosts/${this.state.type}/${this.state.userId}/${this.state.timeStamp}/`).update({
+                servicetitle    :this.state.serviceTitle,
+                servicedescription     :this.state.description, 
             }).then(data=>{
                 alert("Updated !")
                 this.props.history.go(-1)
@@ -72,57 +71,22 @@ class AddListings extends React.Component {
                             <Card.Body>
                                 <Form>
                                     <Row>
-                                        <Col>
-                                            <Form.Group controlId="addStaffForm.UserGroupSelect"  >
-                                                <Form.Label>Make</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.make = ref}} onChange={this.setMake} value={this.state.make}>
-                                                    <option value={null}>Select Make</option>
-                                                    <option value="Acer">Acer</option>
-                                                    <option value="Alcatel">Alcatel</option>
-                                                    <option value="Apple">Apple</option>
-                                                    <option value="Binatone">Binatone</option>
-                                                    <option value="Blackberry">Blackberry</option>
-                                                    <option value="CAT">CAT</option>
-                                                    <option value="Doro">Doro</option>
-                                                    <option value="Google">Google</option>
-                                                    <option value="Honor">Honor</option>
-                                                    <option value="Huawei">Huawei</option>
-                                                    <option value="LG">LG</option>
-                                                    <option value="Nokia">Nokia</option>
-                                                    <option value="One Plus">One Plus</option>
-                                                    <option value="Oppo">Oppo</option>
-                                                    <option value="Samsung">Samsung</option>
-                                                    <option value="Sony">Sony</option>
-                                                    <option value="Vodafone">Vodafone</option>
-                                                    <option value="Xiaomi">Xiaomi</option>
-                                                    <option value="ZTE">ZTE</option>
-                                                </Form.Control>
+                                        <Col >
+                                            <Form.Group >
+                                                <Form.Label>Service Title</Form.Label>
+                                                <Form.Control ref={(ref) => {this.serviceTitle = ref}} type="text" placeholder="Enter Service Title" value={this.state.serviceTitle} onChange={this.setServiceTitle}/>
                                             </Form.Group>
-                                            
-                                            <Form.Group controlId="addStaffForm.Country">
-                                                <Form.Label>Model</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.model = ref}} onChange={this.setModel} value={this.state.model}>
-                                                    <option value={null}>Select Model</option>
-                                                    <option value={'Mobile'}>Mobile</option>
-                                                    <option value={'Parts'}>Parts</option>
-                                                    <option value={'China'}>Accessories</option>
-                                                    <option value={'Russia'}>Tablets</option>
-                                                    <option value={'Japan'}>PC/Games</option>
-                                                    <option value={'Japan'}>Gadgets</option>
-                                                </Form.Control>
-                                            </Form.Group>                                            
-
-                                            <Form.Group controlId="addStaffForm.Mobile">
-                                                <Form.Label>Product Type</Form.Label>
-                                                <Form.Control ref={(ref) => {this.productType = ref}} placeholder="Enter Product Type" value={this.state.productType} 
-                                                    onChange={this.setProductType}/>
-                                            </Form.Group>                                           
+                                       
+                                            <Form.Group>
+                                                <Form.Label>Servide Description</Form.Label>
+                                                <textarea className={'form-control'} rows="5" ref={(ref) => this.description = ref} onChange={this.setServiceDescription} value={this.state.description}/>
+                                            </Form.Group>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>
                                             <Button className="btn-success float-left" name="addNewStaff" onClick={this.onUpdate} >Save</Button>
-                                            <Button className="btn-default float-right" name="cancel"  ><NavLink style = {{color:"white"}} to="/listings/listings">Cancel</NavLink></Button>
+                                            <Button className="btn-default float-right" name="cancel"  ><NavLink style = {{color:"white"}} to="/listings/service/servicelistings">Cancel</NavLink></Button>
                                         </Col>
                                     </Row>
                                 </Form>
@@ -135,6 +99,6 @@ class AddListings extends React.Component {
     }
 }
 
-const AddStaffWithRouter = withRouter(AddListings)
+const UpdateServiceListingsWithRouter = withRouter(UpdateServiceListings)
 
-export default AddListings;
+export default UpdateServiceListings;

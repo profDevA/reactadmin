@@ -77,7 +77,7 @@ class Users extends React.Component {
                             </Card.Header>
                             <Card.Body>
                                 <Form>
-                                    <Table responsive hover>
+                                    <Table responsive striped>
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -90,46 +90,6 @@ class Users extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th></th>
-                                                <td>
-                                                    <Form.Control type="text" placeholder="" />
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control as="select">
-                                                        <option></option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </Form.Control>
-                                                </td>
-                                                <td>
-                                                    <Form.Control type="text" placeholder="" />
-                                                </td>
-                                               
-                                                
-                                                <td></td>
-                                            </tr>
-                                            
                                             {
                                                 this.state.users.length > 0 &&
                                                 this.state.users.map((data, index) => {
@@ -143,19 +103,20 @@ class Users extends React.Component {
                                                             <td> {data.countryname} </td>
                                                             <td> {data.phonenumber} </td>
                                                             <td>
-                                                                <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/user/UpdateUser", aboutProps:{
-                                                                    id:data.id,
-                                                                    fullName:data.username,
-                                                                    country:data.countryname,
-                                                                    package:data.isbasicuser,
-                                                                    mobile:data.phonenumber,
-                                                                    email:data.email,
-                                                                    
-                                                                }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
-                                                                
-                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" onClick = {() => this.removeUser(data.id)}>
-                                                                    <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                                </Button>
+                                                                <DropdownButton as={InputGroup.Prepend} title="Action" >
+                                                                    <Dropdown.Item>
+                                                                    <NavLink className = "" title="Update" style = {{color:"black"}} to={{pathname:"/user/UpdateUser", aboutProps:{
+                                                                            id:data.id,
+                                                                            fullName:data.username,
+                                                                            country:data.countryname,
+                                                                            package:data.isbasicuser,
+                                                                            mobile:data.phonenumber,
+                                                                            email:data.email,
+                                                                        }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i>&nbsp;Edit</NavLink>
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Divider />
+                                                                    <Dropdown.Item onClick = {() => this.removeUser(data.userId)}><i className = "fa fa-remove" style = {{fontSize: 16}}></i>&nbsp;Delete</Dropdown.Item>
+                                                                </DropdownButton>
                                                             </td>
                                                         </tr>
                                                     )

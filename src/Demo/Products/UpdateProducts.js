@@ -24,7 +24,8 @@ class AddProducts extends React.Component {
             this.setState({make:this.props.location.aboutProps.make})
             this.setState({productType:this.props.location.aboutProps.productType})
             this.setState({model:this.props.location.aboutProps.model})
-        }        
+        } 
+               
     }
 
     setMake = async () => {
@@ -67,7 +68,7 @@ class AddProducts extends React.Component {
                     <Col>
                         <Card>
                             <Card.Header>
-                                <Card.Title as="h5">Add New Listings</Card.Title>
+                                <Card.Title as="h5">Update Product</Card.Title>
                             </Card.Header>
                             <Card.Body>
                                 <Form>

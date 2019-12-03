@@ -67,18 +67,20 @@ class BuyListings extends React.Component {
         return result;
     }
 
-    removeUser = (id) => {
+    //Remove Listing
+    removeListing = (type, userid, timestamp) => {
+        console.log('received id', type, userid, timestamp)
         
         confirmAlert({
-          message: 'Are you sure to delete this user?',
+          message: 'Are you sure to delete this listing?',
           buttons: [
             {
               label: 'Yes',
               onClick: () => {
-                                firebase.firestore().ref(`/users/${id}/`).remove()
+                                firebase.database().ref(`/NewPosts/${type}/${userid}/${timestamp}`).remove()
                                 .catch(error => {console.log(error)})
                                 .then(data=> {
-                                    alert("Remove Success")
+                                    alert("Remove Success!")
                                     window.location.reload(true)
                                 })
                             }
@@ -106,13 +108,12 @@ class BuyListings extends React.Component {
                             </Card.Header>
                             <Card.Body>
                                 <Form>
-                                    <Table responsive hover>
+                                    <Table responsive striped>
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Title</th>
                                                 <th>Description</th>                                                   
-                                                                                             
                                                 <th>Actions</th>        
                                             </tr>
                                         </thead>
@@ -120,28 +121,38 @@ class BuyListings extends React.Component {
                                             {
                                                 this.state.listings.length > 0 &&
                                                 this.state.listings.map((data, index) => {
-
+                                                    console.log("this is service data",data)
                                                     return (
                                                         <tr key={index}>
                                                             <th>{index + 1}</th>
                                                             <td> {data.servicetitle} </td>
                                                             <td style={{maxWidth:500, whiteSpace:'pre-wrap'}}> {data.description} </td>
-                                                      
-                                                        
-                                                         
                                                             <td>
-                                                                <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/listings/updatelistings", aboutProps:{
-                                                                    id:data.id,
-                                                                    make:data.make,
-                                                                    model:data.model,
-                                                                    // productType:data.productType.name,
-                                                                  
-                                                                    
+                                                                <DropdownButton as={InputGroup.Prepend} title="Action" >
+                                                                    <Dropdown.Item>
+                                                                    <NavLink className = "" title="Update" style = {{color:"black"}} to={{pathname:"/listings/service/updateservicelistings", aboutProps:{
+                                                                            type:data.type,
+                                                                            userId:data.userId,
+                                                                            timeStamp:data.timeStamp,
+                                                                            servicetitle: data.servicetitle,
+                                                                            description: data.description,
+                                                                        }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i>&nbsp;Edit</NavLink>
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Divider />
+                                                                    <Dropdown.Item onClick = {() => this.removeListing(data.type, data.userId, data.timeStamp)}><i className = "fa fa-remove" style = {{fontSize: 16}}></i>&nbsp;Delete</Dropdown.Item>
+                                                                </DropdownButton>
+
+                                                                {/* <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/listings/service/updateservicelistings", aboutProps:{
+                                                                    type:data.type,
+                                                                    userId:data.userId,
+                                                                    timeStamp:data.timeStamp,
+                                                                    servicetitle: data.servicetitle,
+                                                                    description: data.description,
                                                                 }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
                                                                 
-                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" >
+                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" onClick = {() => this.removeListing(data.type, data.userId, data.timeStamp)}>
                                                                     <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                                </Button>
+                                                                </Button> */}
                                                             </td>
                                                         </tr>
                                                     )

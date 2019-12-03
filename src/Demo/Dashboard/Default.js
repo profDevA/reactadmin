@@ -1,5 +1,6 @@
 import React from 'react';
 import {Row, Col, Card, Table, Tabs, Tab} from 'react-bootstrap';
+import firebase from 'firebase'
 
 import Aux from "../../hoc/_Aux";
 import DEMO from "../../store/constant";
@@ -9,7 +10,123 @@ import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
 
 class Dashboard extends React.Component {
+    
+    constructor (props) {
+        super(props)
+        this.state =  {
+            users: [],
+            listings:[]
+        }
+    }
+
+    componentDidMount () {
+        this.getUsers (user => {this.setState({users: user})})
+
+        this.getListings("", listings=>{
+            this.setState({listings:listings})
+        })
+
+    }
+
+    getUsers = (callback) => {
+        let temp = []
+        firebase.firestore().collection ("users").where ("id", ">", "")
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                temp.push(doc.data())
+                callback (temp)
+                console.log(temp);
+            })
+        })
+        .catch(function(error) {
+            console.log("Error gettting:", error)
+        })
+    }
+
+    //Get listings
+    getListings = (searchKey, callback) => {
+        let temp = []
+        firebase.database().ref(`/NewPosts/`).on('value', snap=>{
+            
+            Object.keys(snap.val()).map((data, index)=>{
+                
+                if (data === "sell"){
+                    if(searchKey === '' || data === searchKey){
+                        Object.keys(snap.val()[data]).map((sub_data, sub_index)=>{
+                        
+                            Object.keys(snap.val()[data][sub_data]).map((sub_item, sub_item_index)=>{
+                                
+                                Object.keys(snap.val()[data][sub_data][sub_item]).map((sub_timestamp,sub_timestamp_index)=>{
+                                    var tempData = snap.val()[data][sub_data][sub_item][sub_timestamp]
+                                    var tempJson = {
+                                        type            :data,
+                                        model           :sub_data,
+                                        userId          :sub_item,
+                                        timeStamp       :sub_timestamp,
+                                        description     :tempData.moredescription,
+                                        Img             :tempData.moreimage,
+                                        region          :tempData.moreregional,
+                                        stockcondition  :tempData.morestockcondition,
+                                        storage         :tempData.morestorage,
+                                        selColor        :tempData.selColor,
+                                        selPartNo       :tempData.selPartNo,
+                                        selQuantity     :tempData.selQuantity,
+                                        selStockType    :tempData.selStockType,
+                                        selectedcategory:tempData.selectedcategory,
+                                        selectedproducttype :tempData.selectedproducttype,
+                                        selmake         :tempData.selmake,
+                                        selmodel        :tempData.selmodel,
+                                        useravarta      :tempData.useravarta,
+                                        usercountryid   :tempData.usercountryid,
+                                        usercountryname :tempData.usercountryname,
+                                        username        :tempData.username,
+                                        useronline      :tempData.useronline,
+                                        usertitle       :tempData.usertitle,
+                                    }
+                                    
+                                    temp.push(tempJson)
+                                   
+                                })
+                            })
+                        })
+                    }
+                    
+                } else {
+                    if( data === searchKey){
+                        Object.keys(snap.val()[data]).map((sub_data, sub_index)=>{
+                            Object.keys(snap.val()[data][sub_data]).map((sub_timestamp, sub_timestamp_index) => {
+                                var tempData = snap.val()[data][sub_data][sub_timestamp]
+
+                                var tempJson = {
+                                    type            :data,                                
+                                    userId          :sub_data,
+                                    timeStamp       :sub_timestamp,
+                                    description     :tempData.servicedescription,
+                                    Img             :tempData.serviceimage,                                
+                                    servicetitle    :tempData.servicetitle,
+                                    useravarta      :tempData.useravarta,
+                                    usercountryid   :tempData.usercountryid,    
+                                    usercountryname :tempData.usercountryname,
+                                    useronline      :tempData.useronline,
+                                    username        :tempData.username,
+                                    usertitle       :tempData.usertitle,
+                                }
+                                temp.push(tempJson)
+                            })
+                        })
+                    }
+                } 
+
+            })
+            // console.log(temp)
+            callback(temp)
+        })
+    }
     render() {
+        console.log("thisis listings", this.state.users)
+        console.log("thisis listings", this.state.listings)
+        const count = 0
         const tabContent = (
             <Aux>
                 <div className="media friendlist-box align-items-center justify-content-center m-b-20">

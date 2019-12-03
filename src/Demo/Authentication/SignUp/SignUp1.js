@@ -6,8 +6,8 @@ import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import DEMO from "../../../store/constant";
 import firebase from 'firebase';
-import { withRouter } from 'react-router-dom';
 
+import { withRouter } from 'react-router'
 
 
 
@@ -49,8 +49,10 @@ class SignUp1 extends React.Component {
         } else {
             firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(data=>{
-                console.log(data.user.uid)                
+                console.log(data.user.uid)    
+                this.props.history.go(-1)            
             })
+            
         }        
     }
 
@@ -87,10 +89,10 @@ class SignUp1 extends React.Component {
                                     
                                 </div>                                
                                 <div className="form-group text-left">
-                                    <div className="checkbox checkbox-fill d-inline">
+                                    {/* <div className="checkbox checkbox-fill d-inline">
                                         <input type="checkbox" name="checkbox-fill-2" id="checkbox-fill-2"/>
                                             <label htmlFor="checkbox-fill-2" className="cr">Send me the <a href={DEMO.BLANK_LINK}> Newsletter</a> weekly.</label>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <button className="btn btn-primary shadow-2 mb-4"  onClick = {this.signUp}>Sign up</button>
                                 <p className="mb-0 text-muted">Allready have an account? <NavLink to="/auth/signin-1">Login</NavLink></p>

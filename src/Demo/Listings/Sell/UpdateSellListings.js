@@ -10,53 +10,87 @@ class UpdateSellListings extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            id:'',
-            make:'',
+            type:'',
+            model:'',
+            userId:'',
+            timeStamp:'',
             productType:'',
-            model:''
+            selMake:'',
+            selModel:'',
+            selPartNo:'',
+            stockType:'',
+            stockCondition:'',
         }
     }
 
     componentDidMount(){
-        console.log(this.props.location.aboutProps)
+        console.log('this is about props-----------',this.props.location.aboutProps)
         if(this.props.location.aboutProps){
-            this.setState({id:this.props.location.aboutProps.id})
-            this.setState({make:this.props.location.aboutProps.make})
-            this.setState({productType:this.props.location.aboutProps.productType})
+            this.setState({type:this.props.location.aboutProps.type})
             this.setState({model:this.props.location.aboutProps.model})
-        }        
+            this.setState({userId:this.props.location.aboutProps.userId})
+            this.setState({timeStamp:this.props.location.aboutProps.timeStamp})
+            this.setState({productType:this.props.location.aboutProps.producttype})
+            this.setState({selMake:this.props.location.aboutProps.selmake})
+            this.setState({selModel:this.props.location.aboutProps.selmodel})
+            this.setState({selPartNo:this.props.location.aboutProps.selPartNo})
+            this.setState({stockType:this.props.location.aboutProps.stocktype})
+            this.setState({stockCondition:this.props.location.aboutProps.stockcondition})
+        }      
     }
 
-    setMake = async () => {
-        await this.setState({make:this.make.value})
-        await console.log(this.state.make)
+    setSelMake = async () => {
+        await this.setState({selMake:this.selMake.value})
+        await console.log(this.state.selMake)
     }
 
-    setModel = async () => {
-        await this.setState({model:this.model.value})
-        await console.log(this.state.model)
+    setSelModel = async () => {
+        await this.setState({selModel:this.selModel.value})
+        await console.log(this.state.selModel)
+    }
+    //Set product type
+    setProductType = async () => {
+        await this.setState({productType:this.productType.value})
+        await console.log(this.state.productType)
     }
 
-    setProductType = () => {
-        this.setState({productType:this.productType.value})
-        console.log(this.state.productType)
+    setSelPartNo = () => {
+        this.setState({selPartNo:this.selPartNo.value})
+        console.log(this.selPartNo.value)
+    }
+
+    setStockType = () => {
+        this.setState({stockType: this.stockType.value})
+        console.log(this.stockType.value)
+    }
+
+    setStockCondition = () => {
+        this.setState({stockCondition: this.stockCondition.value})
+        console.log('this is stock condition', this.stockCondition.value)
     }
 
     onUpdate= async ()=>{
-        if ( this.state.make === '') {
-            alert("Selct Make")
-        } else if (this.state.model === ''){
-            alert("Select Model")
-        } else if (this.state.productType === ''){
-            alert("Enter Product Type")
+        if (this.state.selModel === ''){
+            alert("Enter Model")
+        } else if (this.state.selPartNo==='') {
+            alert("Enter Part No")
+        } else if (this.state.stockType==='') {
+            alert("Select Stock Type")
+        } else if (this.state.stockCondition==='') {
+            alert("Select stock condition")
         } else {     
-            await firebase.database().ref(`/Make/${this.state.make}/${this.state.model}/${this.state.id}/`).set({
-                name:this.state.productType 
+            
+            await firebase.database().ref(`/NewPosts/${this.state.type}/${this.state.model}/${this.state.userId}/${this.state.timeStamp}/`).update({
+                selmodel: this.state.selModel,
+                selPartNo: this.state.selPartNo,
+                selStockType: this.state.stockType,
+                morestockcondition: this.state.stockCondition
             }).then(data=>{
                 alert("Updated !")
                 this.props.history.go(-1)
             })
-            .catch(error=>{alert(error)})                
+            .catch(error=>{alert(error)})  
+
         } 
     }
 
@@ -67,62 +101,57 @@ class UpdateSellListings extends React.Component {
                     <Col>
                         <Card>
                             <Card.Header>
-                                <Card.Title as="h5">Add New Listings</Card.Title>
+                                <Card.Title as="h5">Update Listings</Card.Title>
                             </Card.Header>
                             <Card.Body>
                                 <Form>
                                     <Row>
                                         <Col>
-                                            <Form.Group controlId="addStaffForm.UserGroupSelect"  >
-                                                <Form.Label>Make</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.make = ref}} onChange={this.setMake} value={this.state.make}>
-                                                    <option value={null}>Select Make</option>
-                                                    <option value="Acer">Acer</option>
-                                                    <option value="Alcatel">Alcatel</option>
-                                                    <option value="Apple">Apple</option>
-                                                    <option value="Binatone">Binatone</option>
-                                                    <option value="Blackberry">Blackberry</option>
-                                                    <option value="CAT">CAT</option>
-                                                    <option value="Doro">Doro</option>
-                                                    <option value="Google">Google</option>
-                                                    <option value="Honor">Honor</option>
-                                                    <option value="Huawei">Huawei</option>
-                                                    <option value="LG">LG</option>
-                                                    <option value="Nokia">Nokia</option>
-                                                    <option value="One Plus">One Plus</option>
-                                                    <option value="Oppo">Oppo</option>
-                                                    <option value="Samsung">Samsung</option>
-                                                    <option value="Sony">Sony</option>
-                                                    <option value="Vodafone">Vodafone</option>
-                                                    <option value="Xiaomi">Xiaomi</option>
-                                                    <option value="ZTE">ZTE</option>
-                                                </Form.Control>
-                                            </Form.Group>
-                                            
-                                            <Form.Group controlId="addStaffForm.Country">
+                                            <Form.Group controlId="addStaffForm.Mobile">
                                                 <Form.Label>Model</Form.Label>
-                                                <Form.Control as="select" ref={(ref) => {this.model = ref}} onChange={this.setModel} value={this.state.model}>
-                                                    <option value={null}>Select Model</option>
-                                                    <option value={'Mobile'}>Mobile</option>
-                                                    <option value={'Parts'}>Parts</option>
-                                                    <option value={'China'}>Accessories</option>
-                                                    <option value={'Russia'}>Tablets</option>
-                                                    <option value={'Japan'}>PC/Games</option>
-                                                    <option value={'Japan'}>Gadgets</option>
-                                                </Form.Control>
-                                            </Form.Group>                                            
+                                                <Form.Control ref={(ref) => {this.selModel = ref}} placeholder="Enter Model" value={this.state.selModel} 
+                                                    onChange={this.setSelModel}/>
+                                            </Form.Group>                                           
 
                                             <Form.Group controlId="addStaffForm.Mobile">
-                                                <Form.Label>Product Type</Form.Label>
-                                                <Form.Control ref={(ref) => {this.productType = ref}} placeholder="Enter Product Type" value={this.state.productType} 
-                                                    onChange={this.setProductType}/>
-                                            </Form.Group>                                           
+                                                <Form.Label>Part No</Form.Label>
+                                                <Form.Control ref={(ref) => {this.selPartNo = ref}} placeholder="Enter Part No!" value={this.state.selPartNo} 
+                                                    onChange={this.setSelPartNo}/>
+                                            </Form.Group> 
+
+                                            <Form.Group>
+                                                <Form.Label>Stock Type</Form.Label>
+                                                <Form.Control as="select" ref={(ref) => {this.stockType = ref}} 
+                                                onChange={this.setStockType} value={this.state.stockType}
+                                                >
+                                                    <option value={null}>Select Stock Type</option>
+                                                    <option value="New">New</option>
+                                                    <option value="Used">Used</option>
+                                                    <option value="Rerfubished">Rerfubished</option>
+                                                    <option value="CPO">CPO</option>
+                                                    <option value="Other">Other</option>
+                                                </Form.Control>
+                                            </Form.Group> 
+                                            <Form.Group>
+                                                <Form.Label>Stock Condition</Form.Label>
+                                                <Form.Control as="select" ref={(ref) => {this.stockCondition = ref}} onChange={this.setStockCondition} value={this.state.stockCondition} >
+                                                    <option value={null}>Select Condition</option>
+                                                    <option>Boxed</option>
+                                                    <option>HSO</option>
+                                                    <option>Grade A</option>
+                                                    <option>Grade B</option>
+                                                    <option>Mix</option>
+                                                    <option>Tested</option>
+                                                    <option>BER</option>
+                                                    <option>Other</option>
+                                                </Form.Control>
+                                            </Form.Group>                                        
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>
                                             <Button className="btn-success float-left" name="addNewStaff" onClick={this.onUpdate} >Save</Button>
-                                            <Button className="btn-default float-right" name="cancel"  ><NavLink style = {{color:"white"}} to="/listings/listings">Cancel</NavLink></Button>
+                                            <Button className="btn-default float-right" name="cancel"  ><NavLink style = {{color:"white"}} to="/listings/sell/selllistings">Cancel</NavLink></Button>
                                         </Col>
                                     </Row>
                                 </Form>
@@ -135,6 +164,6 @@ class UpdateSellListings extends React.Component {
     }
 }
 
-const AddStaffWithRouter = withRouter(UpdateSellListings)
+const UpdateSellListingsWithRouter = withRouter(UpdateSellListings)
 
 export default UpdateSellListings;

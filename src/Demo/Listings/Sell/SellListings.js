@@ -110,18 +110,19 @@ class SellListings extends React.Component {
         return result;
     }
 
-    removeUser = (id) => {
+    removeListing = (type, model, userid, timestamp) => {
+        console.log('received id', type, model, userid, timestamp)
         
         confirmAlert({
-          message: 'Are you sure to delete this user?',
+          message: 'Are you sure to delete this listing?',
           buttons: [
             {
               label: 'Yes',
               onClick: () => {
-                                firebase.firestore().ref(`/users/${id}/`).remove()
+                                firebase.database().ref(`/NewPosts/${type}/${model}/${userid}/${timestamp}`).remove()
                                 .catch(error => {console.log(error)})
                                 .then(data=> {
-                                    alert("Remove Success")
+                                    alert("Remove Success!")
                                     window.location.reload(true)
                                 })
                             }
@@ -149,7 +150,7 @@ class SellListings extends React.Component {
                             </Card.Header>
                             <Card.Body>
                                 <Form>
-                                    <Table responsive hover>
+                                    <Table responsive striped>
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -166,7 +167,7 @@ class SellListings extends React.Component {
                                             {
                                                 this.state.listings.length > 0 &&
                                                 this.state.listings.map((data, index) => {
-
+                                                    console.log('this is user data', data)
                                                     return (
                                                         <tr key={index}>
                                                             <th>{index + 1}</th>
@@ -175,22 +176,44 @@ class SellListings extends React.Component {
                                                             <td> {data.selmodel} </td>
                                                             <td> {data.selPartNo} </td>
                                                             <td> {data.selStockType} </td>
-                                                            <td> {data.morestockcondition} </td>
+                                                            <td> {data.stockcondition} </td>
                                                         
                                                          
                                                             <td>
-                                                                <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/listings/updatelistings", aboutProps:{
-                                                                    id:data.id,
-                                                                    make:data.make,
+                                                                <DropdownButton as={InputGroup.Prepend} title="Action" >
+                                                                    <Dropdown.Item>
+                                                                        <NavLink className = "" style={{color:'#000000'}} title="Update" to={{pathname:"/listings/sell/updateselllistings", aboutProps:{
+                                                                            type:data.type,
+                                                                            model:data.model,
+                                                                            userId:data.userId,
+                                                                            timeStamp:data.timeStamp,
+                                                                            producttype:data.selectedproducttype,
+                                                                            selmake:data.selmake,
+                                                                            selmodel:data.selmodel,
+                                                                            selPartNo: data.selPartNo,
+                                                                            stocktype: data.selStockType,
+                                                                            stockcondition: data.stockcondition,
+                                                                        }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i>&nbsp;Edit</NavLink>
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Divider />
+                                                                    <Dropdown.Item onClick = {() => this.removeListing(data.type, data.model, data.userId, data.timeStamp)}><i className = "fa fa-remove" style = {{fontSize: 16}}></i>&nbsp;Delete</Dropdown.Item>
+                                                                </DropdownButton>
+                                                                {/* <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/listings/sell/updateselllistings", aboutProps:{
+                                                                    type:data.type,
                                                                     model:data.model,
-                                                                    // productType:data.productType.name,
-                                                                  
-                                                                    
+                                                                    userId:data.userId,
+                                                                    timeStamp:data.timeStamp,
+                                                                    producttype:data.selectedproducttype,
+                                                                    selmake:data.selmake,
+                                                                    selmodel:data.selmodel,
+                                                                    selPartNo: data.selPartNo,
+                                                                    stocktype: data.selStockType,
+                                                                    stockcondition: data.stockcondition,
                                                                 }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
                                                                 
-                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" >
+                                                                <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip"  onClick = {() => this.removeListing(data.type, data.model, data.userId, data.timeStamp)}>
                                                                     <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                                </Button>
+                                                                </Button> */}
                                                             </td>
                                                         </tr>
                                                     )

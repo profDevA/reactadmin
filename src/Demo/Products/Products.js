@@ -51,31 +51,30 @@ class Product extends React.Component {
         for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
         return result;
     }
-
-    removeUser = (id) => {
-        
+    remove = (id, make, model) => {
+        console.log(id, make, model)
         confirmAlert({
-          message: 'Are you sure to delete this user?',
-          buttons: [
-            {
-              label: 'Yes',
-              onClick: () => {
-                                firebase.firestore().ref(`/users/${id}/`).remove()
-                                .catch(error => {console.log(error)})
-                                .then(data=> {
-                                    alert("Remove Success")
-                                    window.location.reload(true)
-                                })
-                            }
-            },
-            {
-              label: 'No',
-
-            }
-          ]
-        })
-        
+            message: 'Are you sure to delete this product?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                                firebase.database().ref(`/Make/${make}/${model}/${id}/`).remove()
+                                .then(data=>{alert("Delete Success!")})
+                                this.getListings(listings=>{
+                                    this.setState({listings:listings})
+                                    console.log(listings)
+                                }) 
+                              }
+              },
+              {
+                label: 'No',
+  
+              }
+            ]
+          })
     }
+
 
 
     render() {
@@ -90,8 +89,8 @@ class Product extends React.Component {
                             </Card.Header>
                             <Card.Body>
                                 <Form>
-                                <button className="btn btn-primary shadow-2 mb-4" style={{float:"right"}}><NavLink style = {{color:"white"}} to="/listings/addlistings">Add New</NavLink></button>
-                                    <Table responsive hover>
+                                <button className="btn btn-primary shadow-2 mb-4" style={{float:"right"}}><NavLink style = {{color:"white"}} to="/products/addproducts">Add New</NavLink></button>
+                                    <Table responsive striped>
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -102,9 +101,6 @@ class Product extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
-                                           
-                                          
                                             {
                                                 this.state.listings.length > 0 &&
                                                 this.state.listings.map((data, index) => {
@@ -117,18 +113,18 @@ class Product extends React.Component {
                                                             <td> {data.productType.name} </td>
                                                          
                                                             <td>
-                                                                <NavLink className = "btn btn-success btn-xs" title="Update" style = {{color:"white"}} to={{pathname:"/listings/updatelistings", aboutProps:{
-                                                                    id:data.id,
-                                                                    make:data.make,
-                                                                    model:data.model,
-                                                                    productType:data.productType.name,
-                                                                  
-                                                                    
-                                                                }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i></NavLink>
-                                                                
-                                                                {/* <Button className = "btn btn-danger btn-xs"  title="Remove" data-toggle="tooltip" >
-                                                                    <i className = "fa fa-remove" style = {{fontSize: 16}}></i>
-                                                                </Button> */}
+                                                                <DropdownButton as={InputGroup.Prepend} title="Action" >
+                                                                    <Dropdown.Item>
+                                                                    <NavLink className = "" title="Update" style = {{color:"black"}} to={{pathname:"/products/updateproducts", aboutProps:{
+                                                                            id:data.id,
+                                                                            make:data.make,
+                                                                            model:data.model,
+                                                                            productType:data.productType.name,
+                                                                        }}}><i className = "fa fa-edit" style = {{fontSize: 16}}></i>&nbsp;Edit</NavLink>
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Divider />
+                                                                    <Dropdown.Item onClick = {() => this.remove(data.id, data.make, data.model)}><i className = "fa fa-remove" style = {{fontSize: 16}}></i>&nbsp;Delete</Dropdown.Item>
+                                                                </DropdownButton>
                                                             </td>
                                                         </tr>
                                                     )

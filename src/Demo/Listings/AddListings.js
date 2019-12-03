@@ -6,9 +6,9 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { makeStyles } from '@material-ui/core/styles';
+import FileUploader from "react-firebase-file-uploader";
 import SelectModel from './Components/SelectModel';
-import SelectModel2 from './Components/SelectModel2';
-import SelectModel3 from './Components/SelectModel3';
+
 
 
 
@@ -34,11 +34,23 @@ class AddListings extends React.Component{
             users:[],
             user:'',
             id:'',
+            productImage:'',
+            description:'',
+            timestamp:'',
+            serviceTitle:'',
+            serviceDescription:'',
+            serviceImage:'',
+            serviceImageURL:'',
+            isUploading: false,
+            progress:0,
+
         }
     }
 
     componentDidMount(){
-        this.getUsers(  user => {  this.setState({users:user}) });
+        this.getUsers( user => {  this.setState({users:user}) });
+        this.setState({timestamp: new Date().getTime()})
+        console.log("this is timestamp", this.state.timestamp)
     }
 
     getUsers = (callback) => {  
@@ -56,11 +68,6 @@ class AddListings extends React.Component{
             console.log("Error getting documents: ", error);
         });
     }
-    //Set  User SelectBox
-    showUser = () => {
-        this.setState({user:this.user.value,id:this.user.id })
-        console.log("-------------",this.user)
-    }
 
     useStyles =()=> makeStyles(theme => ({
         button: {
@@ -70,26 +77,7 @@ class AddListings extends React.Component{
 
     setModel = (data) =>{
         this.setState({model:data})
-        console.log(data)
-    }
-
-    goNext = () => {
-        if(this.state.step===1){
-            if(this.state.model===''){
-                alert("Please select model!")
-            } else {
-                this.setState({step:this.state.step+1})
-            }
-        } else if (this.state.step === 2) {
-            this.setState({step:this.state.step+1})
-        } else if (this.state.step === 3) {
-            this.setState({step:this.state.step+1})
-        }
-
-        
-    }
-    goBack = () => {
-        this.setState({step:this.state.step-1})
+        console.log("this is model",data)
     }
 
     ////////////////////////////////////////////
@@ -133,6 +121,159 @@ class AddListings extends React.Component{
         this.setState({storage:data})
     }
 
+    setUser = () => {
+        console.log(this.user.value)
+        this.setState({id:this.user.value})
+        console.log('this is user value',this.user.value)
+    }
+
+    setProductImage = (data) => {
+        this.setState({productImage:data})
+    }
+
+    setDescription = (data) => {
+        this.setState({description:data})
+    }
+
+    //service part
+    setServiceTitle = () => {
+        this.setState({serviceTitle:this.serviceTitle.value})
+        console.log(this.serviceTitle.value)
+    }
+
+    setServiceDescription = () => {
+        this.setState({serviceDescription:this.serviceDescription.value})
+        console.log(this.serviceDescription.value)
+    }
+
+    //Service Image Upload
+    handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+    handleProgress = progress => this.setState({ progress });
+    handleUploadError = error => {
+      this.setState({ isUploading: false });
+      console.error(error);
+    };
+    handleUploadSuccess = filename => {
+        // console.log("----------------",filename)
+      this.setState({ serviceImage: filename, progress: 100, isUploading: false });
+      firebase
+        .storage()
+        .ref("images")
+        .child(filename)
+        .getDownloadURL()
+        .then(url => {
+            this.setState({ serviceImageURL: url })
+            console.log("----------------",url)
+        });
+    };
+
+    onSave = () => {
+        console.log('service title',this.state.serviceTitle)
+        console.log('service description', this.state.serviceDescription)
+
+        if (this.state.id==='') {
+            alert('Please select user!')
+        } else {
+            let useravarta ='undefined', usercountryid= 0, usercountryname='', username='', useronline='', usertitle=''
+            this.state.users.map((data, index)=>{
+                if (data.id === this.state.id) {
+                    useravarta = data.useravarta ? data.useravarta : 'http://'
+                    usercountryid = data.countryID ? data.countryID : 0
+                    usercountryname = data.countryname ? data.countryname : ''
+                    username = data.username
+                    useronline =  data.online ? data.online :'null' 
+                    usertitle = data.businesstype? data.businesstype: 'null'
+    
+                }     
+            })
+    
+            if (this.state.model!=='services') {
+                if (this.state.productMake===''){
+                    alert("Please select make!")
+                }else if (this.state.productType===''){
+                    alert("Please select type!")
+                }else if (this.state.productModel===''){
+                    alert("Please select model!")
+                }else if (this.state.partNo===''){
+                    alert("Please enter part no!")
+                }else if (this.state.quantity===''){
+                    alert("Please enter quantity!")
+                }else if (this.state.stockType===''){
+                    alert("Please select stock type!")
+                } else if (this.state.color===''){
+                    alert("Please select color!")
+                } else if (this.state.stockCondition===''){
+                    alert("Please select stock condition!")
+                } else if (this.state.regionalSpecs===''){
+                    alert("Please select regional specs!")
+                } else if (this.state.storage===''){
+                    alert("Please select storage!")
+                } else if (this.state.productImage===''){
+                    alert("Please upload image!")
+                } else if (this.state.description===''){
+                    alert("Please enter description!")
+                } else {
+                    firebase.database().ref(`/NewPosts/${this.state.model}/${this.state.productType}/${this.state.id}/${this.state.timestamp}/`).set({
+                        moredescription     :this.state.description,
+                        moreimage           :this.state.productImage,
+                        moreregional        :this.state.regionalSpecs,
+                        morestockcondition  :this.state.stockCondition,
+                        morestorage         :this.state.storage,
+                        selColor            :this.state.color,
+                        selPartNo           :this.state.partNo,
+                        selQuantity         :this.state.quantity,
+                        selStockType        :this.state.stockType,
+                        selectedcategory    :this.state.model,
+                        selectedproducttype :this.state.productType,
+                        selmake             :this.state.productMake,
+                        selmodel            :this.state.productModel,
+                        useravarta          :useravarta,
+                        usercountryid       :usercountryid,
+                        usercountryname     :usercountryname,
+                        username            :username,
+                        useronline          :useronline,
+                        usertitle           :usertitle,
+                    }).catch(e => {alert(e)})
+                    .then(data => {
+                        console.log(usercountryid, 'this is user countryid')
+                        alert('Added Successfully!')
+                        window.location.reload()
+                    })
+                }
+            } else if (this.state.model==='services') {
+    
+                console.log(this.state.serviceImageURL)
+    
+                if(this.state.serviceTitle==='') {
+                    alert("Please enter service title!")
+                    return
+                } else if (this.state.serviceDescription==='') {
+                    alert ("Please enter service description!")
+                    return
+                } else if (this.state.serviceImageURL==='') {
+                    alert("Please upload service image!")
+                    return
+                }
+    
+                firebase.database().ref(`/NewPosts/${this.state.model}/${this.state.id}/${this.state.timestamp}/`).set({
+                    servicedescription  :this.state.serviceDescription,
+                    servicetitle        :this.state.serviceTitle,
+                    serviceimage        :this.state.serviceImageURL,
+                    useravarta          :useravarta,
+                    usercountryid       :usercountryid,
+                    usercountryname     :usercountryname,
+                    username            :username,
+                    useronline          :useronline,
+                    usertitle           :usertitle,
+                }).catch(e => {alert(e)})
+                .then(data => {
+                    alert('Added Successfully!')
+                    window.location.reload()
+                })
+            }
+        }
+    }
+
     render(){
         const classes = this.useStyles();
         const {width, height} = this.state;
@@ -144,14 +285,14 @@ class AddListings extends React.Component{
                             <Card.Header>
                                 <Card.Title as="h5">Add Listings</Card.Title>
                             </Card.Header>
-                            <Card.Body style={{display:'flex',flexDirection:'row', flex:1}}>
+                            <Card.Body>
+                            {this.state.step===1&&  <Card.Body style={{display:'flex',flexDirection:'row', flex:1}}>
                                 <Form.Group>
-                                    <Form.Control as="select" ref={(ref) => {this.user = ref}} onChange={this.showUser} value={this.state.user}
-                                    >
+                                    <Form.Control as="select" ref={(ref) => {this.user = ref}} onChange={this.setUser} >
                                         <option value={null}>Select User</option>
                                         {
                                             this.state.users.map((data, index)=>{
-                                                console.log(data)
+                                                console.log('user data--------', data)
                                                 return(
                                                     <option value={data.id} id={data.id}>{data.username}</option>
                                                 )                                                
@@ -159,84 +300,109 @@ class AddListings extends React.Component{
                                         }
                                     </Form.Control>
                                 </Form.Group>
-                            </Card.Body>
+                            </Card.Body>}
+                            
                             <Card.Body style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
-                                <Card.Body style={this.state.step>0&&{ marginRight:20, padding:2, backgroundColor:'#1ab394', height:25, alignItems:'center', justifyContent:'center'}}>
-                                    <Card.Text>1. Post Type</Card.Text>
-                                </Card.Body>
-                                
-                                <Card.Body style={this.state.step>2?{ marginRight:20, padding:2, backgroundColor:'#1ab394', height:25, alignItems:'center', justifyContent:'center'}:{ marginRight:20, padding:2, backgroundColor:'#595959', height:25, alignItems:'center', justifyContent:'center'}}>
-                                    <Card.Text>2. More Info</Card.Text>
-                                </Card.Body>
-                                <Card.Body style={this.state.step>3?{ marginRight:20, padding:2, backgroundColor:'#1ab394', height:25, alignItems:'center', justifyContent:'center'}:{ marginRight:20, padding:2, backgroundColor:'#595959', height:25, alignItems:'center', justifyContent:'center'}}>
-                                    <Card.Text>3. Detail</Card.Text>
-                                </Card.Body>
+                                <Button
+                                    onClick={()=>this.setModel("sell")}
+                                    style={{width:width/10, height:height/13}}
+                                    variant="contained"
+                                    color="default"
+                                    className={classes.button}>
+                                    Sell
+                                </Button>
+                                <Button
+                                    onClick={()=>this.setModel("buy")}
+                                    style={{width:width/10, height:height/13}}
+                                    variant="contained"
+                                    color="default"
+                                    className={classes.button}>
+                                        Buy
+                                </Button>
+                                <Button
+                                    onClick={()=>this.setModel("services")}
+                                    style={{width:width/10, height:height/13}}
+                                    variant="contained"
+                                    color="default"
+                                    className={classes.button}>
+                                    Service
+                                </Button>
                             </Card.Body>
-                            {this.state.step===1&&                            
-                                <Card.Body style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
-                                    <Button
-                                        onClick={()=>this.setModel("sell")}
-                                        style={{width:width/10, height:height/13}}
-                                        variant="contained"
-                                        color="default"
-                                        className={classes.button}>
-                                        Sell
-                                    </Button>
-                                    <Button
-                                        onClick={()=>this.setModel("buy")}
-                                        style={{width:width/10, height:height/13}}
-                                        variant="contained"
-                                        color="default"
-                                        className={classes.button}>
-                                            Buy
-                                    </Button>
-                                    <Button
-                                        onClick={()=>this.setModel("service")}
-                                        style={{width:width/10, height:height/13}}
-                                        variant="contained"
-                                        color="default"
-                                        className={classes.button}>
-                                        Service
-                                    </Button>
-                                </Card.Body>
-                            }
+
                             {
-                                this.state.step===2&&
-                                <SelectModel setMake={this.setMake} setTypes={this.setTypes} setProductModel={this.setProductModel} setPartNo = {this.setPartNo} setQuantity = {this.setQuantity} setStockType={this.setStockType} setColor = {this.setColor} />
+                                (this.state.model=='buy' || this.state.model==='sell') &&
+                                    <SelectModel 
+                                        setMake={this.setMake} 
+                                        setTypes={this.setTypes} 
+                                        setProductModel={this.setProductModel} 
+                                        setPartNo = {this.setPartNo} 
+                                        setQuantity = {this.setQuantity} 
+                                        setStockType={this.setStockType} 
+                                        setColor = {this.setColor} 
+                                        setStockCondition={this.setStockCondition} 
+                                        setRegionalSpecs={this.setRegionalSpecs}  
+                                        setStorage={this.setStorage} 
+                                        setProductImage={this.setProductImage} 
+                                        setDescription={this.setDescription}
+                                    />
+                            }
+                            
+                            {
+                                (this.state.model==='services') &&
+                                // <Card.Body style={{display:'flex', flexDirection:'row', }}>
+                                    <Row style={{flex:1}}>
+                                        <Col sm={12} md={4}>
+                                            <Form.Group >
+                                                <Form.Label>Service Title</Form.Label>
+                                                <Form.Control ref={(ref) => {this.serviceTitle = ref}} type="text" placeholder="Enter Service Title" value={this.state.serviceTitle} onChange={this.setServiceTitle}/>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col sm={12} md={4}>
+                                            <Form.Group>
+                                                <Form.Label>Upload Service Image</Form.Label>
+                                                <FileUploader
+                                                    accept="image/*"
+                                                    name="serviceImage"
+                                                    randomizeFilename
+                                                    storageRef={firebase.storage().ref("images")}
+                                                    onUploadStart={this.handleUploadStart}
+                                                    onUploadError={this.handleUploadError}
+                                                    onUploadSuccess={this.handleUploadSuccess}
+                                                    onProgress={this.handleProgress}
+                                                />
+                                            </Form.Group>
+                                            {this.state.serviceImageURL!==''&&
+                                                <img  src = {this.state.serviceImageURL} style={{height:100, maxWidth:170}} />
+                                            }
+                                        </Col>
+                                        <Col sm={12} md={4}>
+                                            <Form.Group>
+                                                <Form.Label>Servide Description</Form.Label>
+                                                <textarea className={'form-control'} rows="5" ref={(ref) => this.serviceDescription = ref} onChange={this.setServiceDescription} value={this.state.serviceDescription}/>
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
+                                // </Card.Body>
                             }
 
                             {
-                                this.state.step===3&&
-                                <SelectModel2 setStockCondition={this.setStockCondition} setRegionalSpecs={this.setRegionalSpecs}  setStorage={this.setStorage} />
-                            }
-
-                            {
-                                this.state.step===4&&
-                                <SelectModel3 />
-                            }
-
-                        
-                            <Card.Body style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-                            {this.state.step>1&&
+                                (this.state.model!=='')&&
+                                <Row>
+                                    <Col style={{display:'flex', flexDirection:'row-reverse'}}>
                                     <Button
-                                        onClick = {this.goBack}
+                                        onClick = {this.onSave}
                                         style={{ marginLeft:30, marginRight:30, marginBottom:30, width:100, alignSelf:'flex-end' }}
                                         variant="contained"
                                         color="primary"
                                         className={classes.button}
-                                        firstIcon={<Icon>back</Icon>}>
-                                        Previous
+                                        startIcon={<Icon>save</Icon>}
+                                    >
+                                        Save
                                     </Button>
-                                }
-                                <Button
-                                    onClick = {this.goNext}
-                                    style={{ marginLeft:30, marginRight:30, marginBottom:30, width:100, alignSelf:'flex-end' }}
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    endIcon={<Icon>send</Icon>}>
-                                    Next
-                                </Button>
+                                    </Col>
+                                </Row>
+
+                            }
                             </Card.Body>
                         </Card>
                     </Col>
@@ -245,5 +411,4 @@ class AddListings extends React.Component{
         )
     }
 }
-
 export default AddListings;

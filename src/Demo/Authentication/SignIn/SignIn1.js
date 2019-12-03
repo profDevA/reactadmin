@@ -24,8 +24,7 @@ class SignUp1 extends React.Component {
         }
     }
 
-    componentDidMount(){
-        
+    componentDidMount(){       
         
         if(localStorage.getItem("UID")){
             this.setState({isVisibleDashboard:true})
@@ -40,11 +39,12 @@ class SignUp1 extends React.Component {
         } else {
             firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(data=>{
-                console.log(data.user.uid)
+                console.log(data.user)
                 localStorage.setItem("UID",data.user.uid)
+                localStorage.setItem("Name",data.user.email)
                 this.setState({isVisibleDashboard:true})
             })
-            .catch(error=>{console.log(error)})
+            .catch(error=>{alert(error)})
         }     
         
         
@@ -89,13 +89,13 @@ class SignUp1 extends React.Component {
                                     <input type="password" className="form-control" placeholder="password" value={this.state.password} ref={(ref)=>{this.password = ref}} onChange={this.setPassword}/>
                                 </div>
                                 <div className="form-group text-left">
-                                    <div className="checkbox checkbox-fill d-inline">
+                                    {/* <div className="checkbox checkbox-fill d-inline">
                                         <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1"/>
                                             <label htmlFor="checkbox-fill-a1" className="cr"> Save credentials</label>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <button className="btn btn-primary shadow-2 mb-4" onClick={this.redirect}><NavLink to="/dashboard/default">Login</NavLink></button>
-                                <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p>
+                                {/* <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p> */}
                                 <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-1">Signup</NavLink></p>
                             </div>
                         </div>

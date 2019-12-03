@@ -2,8 +2,10 @@
   "name": "datta-able-rv18.0.4",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://lite.codedthemes.com/datta-able/react/default/",
+  
   "dependencies": {
+    "@material-ui/core": "^4.7.0",
+    "@material-ui/icons": "^4.5.1",
     "bootstrap": "^4.3.1",
     "firebase": "^7.5.0",
     "font-awesome": "^4.7.0",
@@ -16,6 +18,7 @@
     "react-confirm-alert": "^2.4.1",
     "react-country-region-selector": "^1.4.5",
     "react-dom": "^16.8.4",
+    "react-firebase-file-uploader": "^2.4.3",
     "react-full-screen": "^0.2.4",
     "react-loadable": "^5.5.0",
     "react-nvd3": "^0.5.7",

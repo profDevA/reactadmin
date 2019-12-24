@@ -96,6 +96,13 @@ export default {
                             url: '/products/products',
                             icon: 'fa fa-product-hunt',
                         },
+                        {
+                            id: 'make',
+                            title: 'Add Make',
+                            type: 'item',
+                            url: '/products/addmake',
+                            icon: 'fa fa-building',
+                        },
 
                     ]
                 },

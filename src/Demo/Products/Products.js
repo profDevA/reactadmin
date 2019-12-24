@@ -95,8 +95,8 @@ class Product extends React.Component {
                                             <tr>
                                                 <th>#</th>
                                                 <th>Make</th>
-                                                <th>Model</th>
-                                                <th>Product Type</th>   
+                                                <th>Product Type</th>
+                                                <th>Model</th>   
                                                 <th>Actions</th>                                              
                                             </tr>
                                         </thead>

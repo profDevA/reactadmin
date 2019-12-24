@@ -31,7 +31,7 @@ class UpdateUser extends React.Component {
         this.setState ({ package: this.props.location.aboutProps.package })
         this.setState ({ country: this.props.location.aboutProps.country })
         this.setState ({ mobile: this.props.location.aboutProps.mobile })
-        console.log( this.props.location.aboutProps.mobile, "--------------------")
+        console.log( this.props.location.aboutProps.id, "--------------------")
     }
 
    
@@ -104,7 +104,7 @@ class UpdateUser extends React.Component {
         id = this.state.id;
         firebase.firestore().collection('users')
         .doc(id)
-        .set({
+        .update({
             id:id,
             username:this.state.fullName,
             email:this.state.email,

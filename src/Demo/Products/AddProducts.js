@@ -15,8 +15,27 @@ class AddProducts extends React.Component {
         this.state = {
             make:'',
             productType:'',
-            model:''
+            model:'',
+            makelist:[]
         }
+    }
+
+    componentDidMount(){
+        // alert()
+        this.getMake(value=>{
+            this.setState({makelist:value})
+        })
+    }
+
+    getMake=(callback)=>{
+        let temp =[]
+        firebase.database().ref(`/MakeTemplate/`).on("value", snap=>{
+            Object.keys(snap.val()).map((data)=>{
+                console.log(snap.val()[data])
+                temp.push(snap.val()[data].name)
+            })
+            callback(temp)            
+        })       
     }
 
     setMake = async () => {
@@ -74,25 +93,15 @@ class AddProducts extends React.Component {
                                                 <Form.Label>Make</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.make = ref}} onChange={this.setMake} value={this.state.make}>
                                                     <option value={null}>Select Make</option>
-                                                    <option value="Acer">Acer</option>
-                                                    <option value="Alcatel">Alcatel</option>
-                                                    <option value="Apple">Apple</option>
-                                                    <option value="Binatone">Binatone</option>
-                                                    <option value="Blackberry">Blackberry</option>
-                                                    <option value="CAT">CAT</option>
-                                                    <option value="Doro">Doro</option>
-                                                    <option value="Google">Google</option>
-                                                    <option value="Honor">Honor</option>
-                                                    <option value="Huawei">Huawei</option>
-                                                    <option value="LG">LG</option>
-                                                    <option value="Nokia">Nokia</option>
-                                                    <option value="One Plus">One Plus</option>
-                                                    <option value="Oppo">Oppo</option>
-                                                    <option value="Samsung">Samsung</option>
-                                                    <option value="Sony">Sony</option>
-                                                    <option value="Vodafone">Vodafone</option>
-                                                    <option value="Xiaomi">Xiaomi</option>
-                                                    <option value="ZTE">ZTE</option>
+                                                    
+                                                    {
+                                                        // this.state.makelist.lensgth>0&&
+                                                        this.state.makelist.map((data,index)=>{
+                                                            return(
+                                                                <option value={data} key={index}>{data}</option>
+                                                            )
+                                                        })
+                                                    }
                                                 </Form.Control>
                                             </Form.Group>
                                             
@@ -100,7 +109,7 @@ class AddProducts extends React.Component {
                                                 <Form.Label>Model</Form.Label>
                                                 <Form.Control as="select" ref={(ref) => {this.model = ref}} onChange={this.setModel} value={this.state.model}>
                                                     <option value={null}>Select Model</option>
-                                                    <option value={'Mobile'}>Mobile</option>
+                                                    <option value={'Mobile Phones'}>Mobile Phones</option>
                                                     <option value={'Parts'}>Parts</option>
                                                     <option value={'China'}>Accessories</option>
                                                     <option value={'Russia'}>Tablets</option>

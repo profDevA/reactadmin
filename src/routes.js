@@ -40,6 +40,7 @@ const UpdateUser = React.lazy(() => import('./Demo/User/UpdateUser'));
 
 //Products
 const Products = React.lazy(() => import('./Demo/Products/Products'));
+const Addmake = React.lazy(() => import('./Demo/Products/Addmake'));
 const AddProducts = React.lazy(() => import('./Demo/Products/AddProducts'));
 const UpdateProducts = React.lazy(() => import('./Demo/Products/UpdateProducts'));
 
@@ -94,6 +95,7 @@ const routes = [
     { path: '/products/products', exact: true, name: 'Products', component: Products},
     { path: '/products/addproducts', exact: true, name: 'AddProducts', component: AddProducts},
     { path: '/products/updateproducts', exact: true, name: 'UpdateProducts', component: UpdateProducts},
+    { path: '/products/addmake', exact: true, name: 'UpdateProducts', component: Addmake},
 
     //Listings Buy Listings
     { path: '/listings/Buy/buylistings', exact: true, name: 'BuyListings', component: BuyListings},

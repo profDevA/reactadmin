@@ -13,7 +13,7 @@
     "font-awesome": "^4.7.0",
     "google-maps-react": "^2.0.2",
     "jquery": "^3.4.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-bootstrap": "^1.0.0-beta.5",
